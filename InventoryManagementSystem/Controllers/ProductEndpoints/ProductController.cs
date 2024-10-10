@@ -42,20 +42,18 @@ namespace InventoryManagementSystem.Controllers.ProductEndpoints
         public async Task<IActionResult> GetAllProducts()
         {
 
-          
-
             var products = await repo.GetAllProductsAsync(await CheckAuth());
-           
-
-          
-          
-
             return View(products);
 
         }
 
-        public IActionResult AddProduct()
+
+        [HttpGet]
+        public async Task<IActionResult> AddProduct()
         {
+            ViewBag.SubCategories = new SelectList(await subCategoryRepo.GetSubCategoriesRepo(), "SubCategoryId", "SubCategoryName");
+            ViewBag.Suppliers = new SelectList(await supplierRepo.GetSuppliersRepo(), "SupplierId", "SupplierName");
+
             return View();
         }
 
@@ -68,6 +66,10 @@ namespace InventoryManagementSystem.Controllers.ProductEndpoints
                 await repo.AddProductAsync(product);
                 return RedirectToAction(nameof(GetAllProducts));
             }
+
+            ViewBag.SubCategories = new SelectList(await subCategoryRepo.GetSubCategoriesRepo(), "SubCategoryId", "SubCategoryName");
+            ViewBag.Suppliers = new SelectList(await supplierRepo.GetSuppliersRepo(), "SupplierId", "SupplierName");
+
             return View(product);
         }
 
