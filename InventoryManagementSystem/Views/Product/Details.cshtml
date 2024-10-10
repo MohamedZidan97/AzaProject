@@ -1,0 +1,34 @@
+﻿@model GetProductByIdResponse
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<h2>Product Details</h2>
+
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-4">
+            @if (!string.IsNullOrEmpty(Model.Photo))
+            {
+                <img src="~/Files/Images/@Model.Photo" class="img-fluid rounded-start" alt="Product Image" />
+            }
+            else
+            {
+                <img src="~/Images/no-image.png" class="img-fluid rounded-start" alt="No Image Available" />
+            }
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">@Model.ProductName</h5>
+                <p class="card-text"><strong>Price:</strong> @Model.Price.ToString("C")</p>
+                <p class="card-text"><strong>Stock:</strong> @Model.Stock</p>
+                <p class="card-text"><strong>Low Stock Level:</strong> @Model.LowStock</p>
+                <p class="card-text"><strong>Sub Category:</strong> @Model.SubCategoryName</p>
+                <p class="card-text"><strong>Supplier:</strong> @Model.SupplierName</p>
+                <a asp-controller="Product" asp-action="UpdateProduct" asp-route-ProductId="@Model.ProductId" class="btn btn-warning">Edit Product</a>
+                <a asp-controller="Product" asp-action="GetAllProducts"  class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
