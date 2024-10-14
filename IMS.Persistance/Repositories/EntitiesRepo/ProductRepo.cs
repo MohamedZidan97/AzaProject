@@ -58,7 +58,7 @@ namespace IMS.Persistance.Repositories.EntitiesRepo
                     SubCategoryId = r.SubCategoryId,
                     SupplierId = r.SupplierId,
                     SubCategoryName = r.SubCategory.Name,
-                    SupplierName = r.Supplier.SupplierName
+                    SupplierName = r.Supplier.SupplierFirstName + r.Supplier.SupplierLastName
                 }).FirstOrDefaultAsync();
 
             return product;

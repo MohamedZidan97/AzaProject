@@ -1,6 +1,7 @@
 ﻿using IMS.Application.Interfaces.IEntitiesRepo;
 using IMS.Domain.Entites;
 using IMS.Domain.View_Model;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
@@ -28,9 +29,12 @@ namespace IMS.Persistance.Repositories.EntitiesRepo
                        select new Supplier_Details_ViewModel
                        {
                            Supplier_Id = supplier.SupplierId,
-                           Supplier_Name = supplier.SupplierName,
+                           Supplier_First_Name = supplier.SupplierFirstName,
+                           Supplier_Last_Name = supplier.SupplierLastName,
+                           Supplier_UserName = supplier.UserName,
+                           Supplier_Email = supplier.Email,
                            Supplier_Image = supplier.Image,
-                           Supplier_ContactInfo = supplier.ContactInfo
+                           Supplier_PhoneNumber = supplier.PhoneNumber
                        };
             return list.ToList();
         }
@@ -39,7 +43,7 @@ namespace IMS.Persistance.Repositories.EntitiesRepo
         {
             dbcontext.suppliers.Add(supplier);
             dbcontext.SaveChanges();
-            Supplier ssupplier = dbcontext.suppliers.FirstOrDefault(sp => sp.SupplierName == supplier.SupplierName && sp.ContactInfo == supplier.ContactInfo) ?? new Supplier();
+            Supplier ssupplier = dbcontext.suppliers.FirstOrDefault(sp => sp.SupplierFirstName == supplier.SupplierFirstName && sp.PhoneNumber == supplier.PhoneNumber) ?? new Supplier();
             User_Supplier user_supplier = new User_Supplier();
             user_supplier.UserId = user_id;
             user_supplier.SupplierId = ssupplier.SupplierId;
@@ -63,8 +67,11 @@ namespace IMS.Persistance.Repositories.EntitiesRepo
         public void UpdateSupplier(int supplier_id, Supplier supplier)
         {
             Supplier oldsupplier = GetSupplierById(supplier_id);
-            oldsupplier.SupplierName = supplier.SupplierName;
-            oldsupplier.ContactInfo = supplier.ContactInfo;
+            oldsupplier.SupplierFirstName = supplier.SupplierFirstName;
+            oldsupplier.SupplierLastName = supplier.SupplierLastName;
+            oldsupplier.UserName = supplier.UserName;
+            oldsupplier.Email = supplier.Email;
+            oldsupplier.PhoneNumber = supplier.PhoneNumber;
             oldsupplier.Image = supplier.Image;
             dbcontext.SaveChanges();
         }

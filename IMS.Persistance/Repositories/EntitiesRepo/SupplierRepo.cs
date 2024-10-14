@@ -27,7 +27,7 @@ namespace IMS.Persistance.Repositories.EntitiesRepo
             return sups.Select(e => new GetSuppliersResponse
             {
                 SupplierId = e.SupplierId,
-                SupplierName = e.SupplierName
+                SupplierName = e.SupplierFirstName + e.SupplierLastName
             }).ToList();
 
         }

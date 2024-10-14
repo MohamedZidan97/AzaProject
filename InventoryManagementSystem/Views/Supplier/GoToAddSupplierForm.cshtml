@@ -1,19 +1,51 @@
 ﻿@* SEIF SHERIF *@
 @model Supplier
 <form asp-action="Add_Supplier" asp-controller="Supplier" method="post" enctype="multipart/form-data" style="background-color: white; color: #333; padding: 15px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); max-width: 400px; margin: auto;">
-
+    <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="SupplierName" style="font-weight: bold;"></label>
-        <input asp-for="SupplierName" class="form-control" style="background-color: #f9f9f9; color: #333; border: 1px solid #ccc; padding: 8px; border-radius: 4px; width: 100%;">
-        <span asp-validation-for="SupplierName" class="text-danger"></span>
+        <label asp-for="SupplierFirstName" style="font-weight: bold;"></label>
+        <input asp-for="SupplierFirstName" class="form-control" style="background-color: #f9f9f9; color: #333; border: 1px solid #ccc; padding: 8px; border-radius: 4px; width: 100%;">
+        <span asp-validation-for="SupplierFirstName" class="text-danger"></span>
     </div>
 
     <br>
 
     <div class="form-group">
-        <label asp-for="ContactInfo" style="font-weight: bold;"></label>
-        <input asp-for="ContactInfo" class="form-control" style="background-color: #f9f9f9; color: #333; border: 1px solid #ccc; padding: 8px; border-radius: 4px; width: 100%;">
-        <span asp-validation-for="ContactInfo" class="text-danger"></span>
+        <label asp-for="SupplierLastName" style="font-weight: bold;"></label>
+        <input asp-for="SupplierLastName" class="form-control" style="background-color: #f9f9f9; color: #333; border: 1px solid #ccc; padding: 8px; border-radius: 4px; width: 100%;">
+        <span asp-validation-for="SupplierLastName" class="text-danger"></span>
+    </div>
+
+    <br>
+
+    <div class="form-group">
+        <label asp-for="UserName" style="font-weight: bold;"></label>
+        <input asp-for="UserName" class="form-control" style="background-color: #f9f9f9; color: #333; border: 1px solid #ccc; padding: 8px; border-radius: 4px; width: 100%;">
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+
+    <br>
+
+    <div class="form-group">
+        <label asp-for="Email" style="font-weight: bold;"></label>
+        <input asp-for="Email" class="form-control" style="background-color: #f9f9f9; color: #333; border: 1px solid #ccc; padding: 8px; border-radius: 4px; width: 100%;">
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <br>
+
+    <div class="form-group">
+        <label asp-for="PhoneNumber" style="font-weight: bold;"></label>
+        <input asp-for="PhoneNumber" class="form-control" style="background-color: #f9f9f9; color: #333; border: 1px solid #ccc; padding: 8px; border-radius: 4px; width: 100%;">
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <br>
+
+    <div class="form-group">
+        <label asp-for="Password" style="font-weight: bold;"></label>
+        <input asp-for="Password" type="password" class="form-control" style="background-color: #f9f9f9; color: #333; border: 1px solid #ccc; padding: 8px; border-radius: 4px; width: 100%;">
+        <span asp-validation-for="Password" class="text-danger"></span>
     </div>
 
     <br>
