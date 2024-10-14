@@ -36,6 +36,8 @@ namespace IMS.Persistance
             //  .HasPrincipalKey(x => x.CategoryId).HasForeignKey(x => x.CategoryId)
             //  .OnDelete(DeleteBehavior.Restrict);
 
+            // SEIF SHERIF
+            builder.Entity<User_Supplier>().HasKey(us => new { us.UserId, us.SupplierId });
 
             base.OnModelCreating(builder);
         }
@@ -47,6 +49,9 @@ namespace IMS.Persistance
         public DbSet<Supplier> suppliers { get; set; }
 
         public DbSet<StockLevel> stockLevels { get; set; }
+
+        // SEIF SHERIF
+        public DbSet<User_Supplier> user_Suppliers { get; set; }
 
     }
 }

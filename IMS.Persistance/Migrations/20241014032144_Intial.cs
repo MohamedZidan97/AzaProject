@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace IMS.Persistance.Migrations
 {
     /// <inheritdoc />
-    public partial class initialTables : Migration
+    public partial class Intial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -73,7 +73,8 @@ namespace IMS.Persistance.Migrations
                     SupplierId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SupplierName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -207,6 +208,30 @@ namespace IMS.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "user_Suppliers",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SupplierId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_Suppliers", x => new { x.UserId, x.SupplierId });
+                    table.ForeignKey(
+                        name: "FK_user_Suppliers_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_user_Suppliers_suppliers_SupplierId",
+                        column: x => x.SupplierId,
+                        principalTable: "suppliers",
+                        principalColumn: "SupplierId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "products",
                 columns: table => new
                 {
@@ -216,7 +241,7 @@ namespace IMS.Persistance.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Stock = table.Column<int>(type: "int", nullable: false),
                     LowStock = table.Column<int>(type: "int", nullable: false),
-                    ProductPhoroUrls = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SubCategoryId = table.Column<int>(type: "int", nullable: false),
                     SupplierId = table.Column<int>(type: "int", nullable: false)
@@ -328,6 +353,11 @@ namespace IMS.Persistance.Migrations
                 name: "IX_subCategories_CategoryId",
                 table: "subCategories",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_Suppliers_SupplierId",
+                table: "user_Suppliers",
+                column: "SupplierId");
         }
 
         /// <inheritdoc />
@@ -350,6 +380,9 @@ namespace IMS.Persistance.Migrations
 
             migrationBuilder.DropTable(
                 name: "stockLevels");
+
+            migrationBuilder.DropTable(
+                name: "user_Suppliers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

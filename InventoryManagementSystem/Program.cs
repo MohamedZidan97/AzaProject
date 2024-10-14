@@ -14,6 +14,9 @@ builder.Services.AddControllersWithViews();
 //
 builder.Services.AddApplicationService();
 
+// SEIF SHERIF
+builder.Services.AddScoped<ISuppliersRepo,Supplier_Repo>();
+
 // Persistance Container
 builder.Services.AddPersistenceService(builder.Configuration);
 

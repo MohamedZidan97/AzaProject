@@ -22,7 +22,7 @@ namespace IMS.Persistance.Repositories.EntitiesRepo
 
         public async Task<IEnumerable<GetSuppliersResponse>> GetSuppliersRepo()
         {
-            var sups= await baseRepo.GetAllAsync();
+            var sups = await baseRepo.GetAllAsync();
 
             return sups.Select(e => new GetSuppliersResponse
             {
