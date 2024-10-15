@@ -26,18 +26,27 @@
     <div class="d-flex flex-wrap justify-content-between">
         @foreach (var report_detail in Model)
         {
+            var i = 0;
             <div class="card shadow-sm" style="width: 18rem; margin: 10px;">
                 <img src="/Files/Images/Report!.jpg" class="card-img-top" alt="..." style="height: 250px; object-fit: cover;">
                 <div class="card-body">
                     <h5 class="card-title">@report_detail.Reported_Name</h5>
                     <h5 class="card-subtitle mb-2 text-muted">@report_detail.Product_Name</h5>
                     <p class="card-text">@report_detail.product_Description</p>
-                    <span class="badge bg-danger">Low Stock</span>
+                    @if (ViewBag.Flags[i] == true)
+                    {
+                        <span class="badge bg-success">In Stock</span>
+                    }
+                    @if (ViewBag.Flags[i] == false)
+                    {
+                        <span class="badge bg-danger">Low Stock</span>
+                    }
+                    <a href="/Dashboard/Delete_Report?report_id=@report_detail.Report_Id" class="btn btn-primary btn-primary" style="color: white; margin-left: 5px;">Delete Report</a>
                 </div>
             </div>
+            i++;
         }
     </div>
-
 }
 
 

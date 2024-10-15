@@ -41,7 +41,7 @@ namespace InventoryManagementSystem.Controllers
             report.UserId = user_id;
             dbcontext.Reports.Add(report);
             dbcontext.SaveChanges();
-            return RedirectToAction("Get_All_Product_Of_Low_Level");
+            return RedirectToAction("Get_All_Reports_Admin");
         }
 
         [Authorize(Roles = "Supplier")]
@@ -63,15 +63,42 @@ namespace InventoryManagementSystem.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Get_All_Reports_Admin()
         {
-            var list = from report in dbcontext.Reports
+            var list = (from report in dbcontext.Reports
                        join application_user in dbcontext.ApplicationUsers on report.UserId equals application_user.Id
                        select new Report_Details_ModelView
                        {
+                           Report_Id = report.Report_Id,
                            Product_Name = report.Product_Name,
                            product_Description = report.Discription,
                            Reported_Name = report.Supplier_Name,
-                       };
-            return View("GoToReportCard", list.ToList());
+                       }).ToList();
+
+            List<Product> products = new List<Product>();
+            List<bool> flags = new List<bool>();
+            foreach (var item in list)
+            {
+                Product? product = dbcontext.products.SingleOrDefault(prod=>prod.ProductName == item.Product_Name);
+                if(product != null && product.Stock > product.LowStock)
+                {
+                    products.Add(product);
+                    flags.Add(true);
+                }
+                if (product != null && product.Stock <= product.LowStock)
+                {
+                    products.Add(product);
+                    flags.Add(false);
+                }
+                ViewBag.Flags = flags;
+            }
+            return View("GoToReportCard",list);
+        }
+
+        public IActionResult Delete_Report(int report_id)
+        {
+            Report report = dbcontext.Reports.SingleOrDefault(rep => rep.Report_Id == report_id) ?? new Report();
+            dbcontext.Reports.Remove(report);
+            dbcontext.SaveChanges();
+            return RedirectToAction("Get_All_Reports_Admin");
         }
     }
 }

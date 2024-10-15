@@ -52,5 +52,6 @@ namespace IMS.Persistance.Repositories.EntitiesRepo
                        };
             return list.ToList();
         }
+
     }
 }
