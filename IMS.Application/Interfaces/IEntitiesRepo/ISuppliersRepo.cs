@@ -17,4 +17,5 @@ namespace IMS.Application.Interfaces.IEntitiesRepo
         public void UpdateSupplier(int supplier_id, Supplier supplier);
 
     }
+
 }

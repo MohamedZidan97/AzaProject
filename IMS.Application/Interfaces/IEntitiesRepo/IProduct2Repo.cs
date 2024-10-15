@@ -10,6 +10,7 @@ namespace IMS.Application.Interfaces.IEntitiesRepo
     public interface IProduct2Repo
     {
         public List<Product_Details_ViewModel> GetAllProductOfCurrentUser(string user_id);
+        public List<Product_Details_ViewModel> GetAllProductOfLowLevel(string user_id);
 
     }
 }

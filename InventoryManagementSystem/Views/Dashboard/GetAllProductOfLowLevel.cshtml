@@ -41,14 +41,8 @@
                             <td>@item.Product_Stock</td>
                             <td>@item.Product_Low_Stock</td>
                             <td>
-                                @if (item.Product_Stock <= item.Product_Low_Stock)
-                                {
-                                    <span class="badge bg-danger">Low Stock</span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-success">In Stock</span>
-                                }
+                                <span class="badge bg-danger">Low Stock</span>
+                                <a href="/Dashboard/Go_To_Report_Form?supplier_id=@item.Supplier_Id&supplier_name=@item.Supplier_Name&supplier_username=@item.Supplier_UserName&product_Name=@item.Product_Name" class="btn btn-primary btn-sm" style="color: white; margin-left: 5px;">Send Report</a>
                             </td>
                         </tr>
                     }
@@ -58,3 +52,4 @@
     </div>
 </body>
 </html>
+

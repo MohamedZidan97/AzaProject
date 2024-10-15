@@ -52,6 +52,7 @@ namespace IMS.Persistance
 
         // SEIF SHERIF
         public DbSet<User_Supplier> user_Suppliers { get; set; }
+        public DbSet<Report> Reports { get; set; }
 
     }
 }

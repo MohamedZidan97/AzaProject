@@ -1,0 +1,44 @@
+﻿@* SEIF SHERIF *@
+@model List<Report_Details_ModelView> 
+@if (!Model.Any())
+{
+    <div class="alert alert-warning" role="alert">
+        No Reports Found !!
+    </div>
+}
+@if (User.IsInRole("Supplier"))
+{
+    @foreach (var report_detail in Model)
+    {
+        <div class="card shadow-sm" style="width: 18rem;">
+            <img src="/Files/Images/Report!.jpg" class="card-img-top" alt="..." style="height: 250px; object-fit: cover;">
+            <div class="card-body">
+                <h5 class="card-title">@report_detail.Reporter_Name</h5>
+                <h5 class="card-subtitle mb-2 text-muted">@report_detail.Product_Name</h5>
+                <p class="card-text">@report_detail.product_Description</p>
+                <span class="badge bg-danger">Low Stock</span>
+            </div>
+        </div>
+    }
+}
+@if (User.IsInRole("Admin"))
+{
+    <div class="d-flex flex-wrap justify-content-between">
+        @foreach (var report_detail in Model)
+        {
+            <div class="card shadow-sm" style="width: 18rem; margin: 10px;">
+                <img src="/Files/Images/Report!.jpg" class="card-img-top" alt="..." style="height: 250px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">@report_detail.Reported_Name</h5>
+                    <h5 class="card-subtitle mb-2 text-muted">@report_detail.Product_Name</h5>
+                    <p class="card-text">@report_detail.product_Description</p>
+                    <span class="badge bg-danger">Low Stock</span>
+                </div>
+            </div>
+        }
+    </div>
+
+}
+
+
+

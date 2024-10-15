@@ -8,7 +8,9 @@ namespace IMS.Domain.Entites
 {
     public class Product_Details_ViewModel
     {
+        public int Supplier_Id { get; set; }
         public string Supplier_Name { get; set; }
+        public string Supplier_UserName { get; set; }
         public string Product_Image { get; set; }
         public string Product_Name { get; set; }  
         public int Product_Stock { get; set; }
