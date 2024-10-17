@@ -38,6 +38,19 @@ namespace IMS.Persistance
 
             // SEIF SHERIF
             builder.Entity<User_Supplier>().HasKey(us => new { us.UserId, us.SupplierId });
+            builder.Entity<Customer_Product>().HasKey(cp => new { cp.CustomerId, cp.ProductId });
+
+            builder.Entity<Customer_Product>()
+        .HasOne(cp => cp.Customer)
+        .WithMany()
+        .HasForeignKey(cp => cp.CustomerId)
+        .OnDelete(DeleteBehavior.NoAction); // or DeleteBehavior.Restrict
+
+            builder.Entity<Customer_Product>()
+                .HasOne(cp => cp.Product)
+                .WithMany()
+                .HasForeignKey(cp => cp.ProductId)
+                .OnDelete(DeleteBehavior.NoAction); // or DeleteBehavior.Restrict
 
             base.OnModelCreating(builder);
         }
@@ -53,6 +66,6 @@ namespace IMS.Persistance
         // SEIF SHERIF
         public DbSet<User_Supplier> user_Suppliers { get; set; }
         public DbSet<Report> Reports { get; set; }
-
+        public DbSet<Customer_Product> customer_Products { get; set; }
     }
 }

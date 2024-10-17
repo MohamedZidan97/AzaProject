@@ -57,6 +57,17 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Get_All_Reports_Supplier">Reports</a>
                             </li>
                         }
+                        @if (User.IsInRole("Customer"))
+                        {
+                            @* SEIF SHERIF *@
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Product2" asp-action="Get_All_Product_For_Customer">Show Products</a>
+                            </li>
+                            @* SEIF SHERIF *@
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Product2" asp-action="Get_All_Shipped_Product_For_Customer">Shopping Cart</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

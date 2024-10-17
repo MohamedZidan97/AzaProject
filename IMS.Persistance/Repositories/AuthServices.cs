@@ -46,7 +46,7 @@ namespace IMS.Persistance.Repositories
 
             if (result.Succeeded)
             {
-               await userManager.AddToRoleAsync(User, "Admin");
+               await userManager.AddToRoleAsync(User, "Customer");
 
                 return new AccountGeneralResponse { IsAuthenticed = true };
             }

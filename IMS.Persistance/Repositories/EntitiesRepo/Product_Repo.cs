@@ -3,6 +3,7 @@ using IMS.Domain.Entites;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -53,5 +54,34 @@ namespace IMS.Persistance.Repositories.EntitiesRepo
             return list.ToList();
         }
 
+        public List<Product> GetAllProductForCustomer()
+        {
+            List<Product> ListOfAllProducts = dbcontext.products.AsNoTracking().ToList();
+            return ListOfAllProducts;
+        }
+
+        public List<ProductShipped> GetAllShippedProductForCustomer(string customer_id)
+        {
+            var list = from customer_product in dbcontext.customer_Products
+                       join product in dbcontext.products on customer_product.ProductId equals product.ProductId
+                       join supplier in dbcontext.suppliers on product.SupplierId equals supplier.SupplierId
+                       where customer_product.CustomerId == customer_id
+                       select new ProductShipped
+                       {
+                           Product_Image = product.Image,
+                           Product_Name = product.ProductName,
+                           Product_Price = product.Price,
+                           Supplier_Name = supplier.SupplierFirstName + " " + supplier.SupplierLastName,
+                           Supplier_Email = supplier.Email,
+                           Supplier_Phone = supplier.PhoneNumber
+                       };
+            return list.ToList();
+        }
+
+        public void AddToCart(Customer_Product customer_product)
+        {
+            dbcontext.customer_Products.Add(customer_product);
+            dbcontext.SaveChanges();
+        }
     }
 }

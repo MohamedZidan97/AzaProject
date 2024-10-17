@@ -11,6 +11,8 @@ namespace IMS.Application.Interfaces.IEntitiesRepo
     {
         public List<Product_Details_ViewModel> GetAllProductOfCurrentUser(string user_id);
         public List<Product_Details_ViewModel> GetAllProductOfLowLevel(string user_id);
-
+        public List<Product> GetAllProductForCustomer();
+        public List<ProductShipped> GetAllShippedProductForCustomer(string customer_id);
+        public void AddToCart(Customer_Product customer_product);
     }
 }
