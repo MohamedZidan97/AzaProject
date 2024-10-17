@@ -51,10 +51,11 @@ namespace IMS.Persistance.Repositories.EntitiesRepo
             dbcontext.SaveChanges();
         }
 
-        public void DeleteSupplier(int supplier_id)
+        public void DeleteSupplier(int supplier_id,ApplicationUser applicationuser)
         {
             Supplier supplier = dbcontext.suppliers.SingleOrDefault(sp => sp.SupplierId == supplier_id) ?? new Supplier();
             dbcontext.suppliers.Remove(supplier);
+            dbcontext.ApplicationUsers.Remove(applicationuser);
             dbcontext.SaveChanges();
         }
 
@@ -64,17 +65,23 @@ namespace IMS.Persistance.Repositories.EntitiesRepo
             return supplier;
         }
 
-        public void UpdateSupplier(int supplier_id, Supplier supplier)
+        public void UpdateSupplier(int supplier_id, Supplier supplier,ApplicationUser applicationuser)
         {
             Supplier oldsupplier = GetSupplierById(supplier_id);
-            oldsupplier.SupplierFirstName = supplier.SupplierFirstName;
-            oldsupplier.SupplierLastName = supplier.SupplierLastName;
-            oldsupplier.UserName = supplier.UserName;
-            oldsupplier.Email = supplier.Email;
-            oldsupplier.PhoneNumber = supplier.PhoneNumber;
+            oldsupplier.SupplierFirstName  = applicationuser.FirstName = supplier.SupplierFirstName;
+            oldsupplier.SupplierLastName   = applicationuser.LastName = supplier.SupplierLastName;
+            oldsupplier.UserName  = applicationuser.UserName = supplier.UserName;
+            oldsupplier.Email  = applicationuser.Email = supplier.Email;
+            oldsupplier.PhoneNumber  = applicationuser.PhoneNumber = supplier.PhoneNumber;
             oldsupplier.Image = supplier.Image;
             dbcontext.SaveChanges();
         }
 
+
+        public ApplicationUser GetMatchedSupplierInApplicationUser(string user_name)
+        {
+            ApplicationUser applicationuser = dbcontext.ApplicationUsers.SingleOrDefault(app => app.UserName == user_name) ?? new ApplicationUser();
+            return applicationuser;
+        }
     }
 }

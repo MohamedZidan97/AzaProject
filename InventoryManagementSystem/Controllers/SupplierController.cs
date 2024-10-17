@@ -66,12 +66,13 @@ namespace InventoryManagementSystem.Controllers
             string user_id = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
             supplier_repo.AddSupplier(supplier, user_id);
             return RedirectToAction("Get_All_Suppliers");
-
         }
 
         public IActionResult Delete_Supplier(int supplierid)
         {
-            supplier_repo.DeleteSupplier(supplierid);
+            Supplier supplier = supplier_repo.GetSupplierById(supplierid);
+            ApplicationUser applicationuser = supplier_repo.GetMatchedSupplierInApplicationUser(supplier.UserName);
+            supplier_repo.DeleteSupplier(supplierid,applicationuser);
             return RedirectToAction("Get_All_Suppliers");
         }
 
@@ -89,7 +90,9 @@ namespace InventoryManagementSystem.Controllers
                 Image.CopyTo(stream);
             }
             supplier.Image = Image.FileName;
-            supplier_repo.UpdateSupplier(supplierid, supplier);
+            Supplier old_supplier = supplier_repo.GetSupplierById(supplierid); ;
+            ApplicationUser applicationuser = supplier_repo.GetMatchedSupplierInApplicationUser(old_supplier.UserName);
+            supplier_repo.UpdateSupplier(supplierid, supplier,applicationuser);
             return RedirectToAction("Get_All_Suppliers");
         }
     }

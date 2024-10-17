@@ -114,7 +114,7 @@ namespace IMS.Persistance.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("categories");
+                    b.ToTable("categories", (string)null);
                 });
 
             modelBuilder.Entity("IMS.Domain.Entites.Product", b =>
@@ -160,7 +160,7 @@ namespace IMS.Persistance.Migrations
 
                     b.HasIndex("SupplierId");
 
-                    b.ToTable("products");
+                    b.ToTable("products", (string)null);
                 });
 
             modelBuilder.Entity("IMS.Domain.Entites.Report", b =>
@@ -200,7 +200,7 @@ namespace IMS.Persistance.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reports");
+                    b.ToTable("Reports", (string)null);
                 });
 
             modelBuilder.Entity("IMS.Domain.Entites.StockLevel", b =>
@@ -224,7 +224,7 @@ namespace IMS.Persistance.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("stockLevels");
+                    b.ToTable("stockLevels", (string)null);
                 });
 
             modelBuilder.Entity("IMS.Domain.Entites.SubCategory", b =>
@@ -246,7 +246,7 @@ namespace IMS.Persistance.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("subCategories");
+                    b.ToTable("subCategories", (string)null);
                 });
 
             modelBuilder.Entity("IMS.Domain.Entites.Supplier", b =>
@@ -291,7 +291,7 @@ namespace IMS.Persistance.Migrations
 
                     b.HasKey("SupplierId");
 
-                    b.ToTable("suppliers");
+                    b.ToTable("suppliers", (string)null);
                 });
 
             modelBuilder.Entity("IMS.Domain.Entites.User_Supplier", b =>
@@ -306,7 +306,7 @@ namespace IMS.Persistance.Migrations
 
                     b.HasIndex("SupplierId");
 
-                    b.ToTable("user_Suppliers");
+                    b.ToTable("user_Suppliers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
