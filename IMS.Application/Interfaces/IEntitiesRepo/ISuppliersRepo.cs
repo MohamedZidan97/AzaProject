@@ -16,6 +16,8 @@ namespace IMS.Application.Interfaces.IEntitiesRepo
         public Supplier GetSupplierById(int supplier_id);
         public void UpdateSupplier(int supplier_id, Supplier supplier,ApplicationUser applicationuser);
         public ApplicationUser GetMatchedSupplierInApplicationUser(string user_name);
+        public int GetIdOfSupplier(string supplier_username, string supplier_email, string supplier_phone);
+        public List<Buying_Proccess> GetBuyedProductOfSupplier(int supplier_id);
 
 
     }

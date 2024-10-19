@@ -17,6 +17,7 @@ builder.Services.AddApplicationService();
 // SEIF SHERIF
 builder.Services.AddScoped<ISuppliersRepo,Supplier_Repo>();
 builder.Services.AddScoped<IProduct2Repo,Product_Repo>();
+builder.Services.AddScoped<User_Repo>();
 
 // Persistance Container
 builder.Services.AddPersistenceService(builder.Configuration);

@@ -83,5 +83,18 @@ namespace IMS.Persistance.Repositories.EntitiesRepo
             ApplicationUser applicationuser = dbcontext.ApplicationUsers.SingleOrDefault(app => app.UserName == user_name) ?? new ApplicationUser();
             return applicationuser;
         }
+
+        public int GetIdOfSupplier(string supplier_username , string supplier_email , string supplier_phone)
+        {
+            Supplier? supplier = dbcontext.suppliers.SingleOrDefault(supplier => supplier.UserName == supplier_username && supplier.Email == supplier_email && supplier.PhoneNumber == supplier_phone);
+            return supplier.SupplierId;
+        }
+
+        public List<Buying_Proccess> GetBuyedProductOfSupplier(int supplier_id)
+        {
+            List<Buying_Proccess> buying_proccesses = dbcontext.Buying_Proccess.Where(bp => bp.supplier_id == supplier_id).ToList();
+            return buying_proccesses;
+        }
+
     }
 }

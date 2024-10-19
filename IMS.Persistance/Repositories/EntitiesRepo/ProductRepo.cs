@@ -4,6 +4,7 @@ using IMS.Application.Interfaces.IEntitiesRepo;
 using IMS.Domain.Entites;
 using IMS.Persistance.Helper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -96,6 +97,11 @@ namespace IMS.Persistance.Repositories.EntitiesRepo
 
         public async Task<GeneralResponse> DeleteProductAsync(int ProductId)
         {
+            List<Customer_Product> relatedRecords = await dbContext.customer_Products
+            .Where(cp => cp.ProductId == ProductId)
+            .ToListAsync();
+            dbContext.customer_Products.RemoveRange(relatedRecords);
+            dbContext.SaveChanges();
             return await baseRepo.DeleteAsync(ProductId);
         }
 

@@ -1,25 +1,36 @@
 ﻿@* SEIF SHERIF *@
-@model List<Report_Details_ModelView> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+@model List<Report_Details_ModelView>
 @if (!Model.Any())
 {
-    <div class="alert alert-warning" role="alert">
-        No Reports Found !!
+    <div class="alert alert-warning text-center" role="alert">
+        <i class="fas fa-exclamation-triangle"></i> No Reports Found !!
     </div>
 }
 @if (User.IsInRole("Supplier"))
 {
-    @foreach (var report_detail in Model)
-    {
-        <div class="card shadow-sm" style="width: 18rem;">
-            <img src="/Files/Images/Report!.jpg" class="card-img-top" alt="..." style="height: 250px; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title">@report_detail.Reporter_Name</h5>
-                <h5 class="card-subtitle mb-2 text-muted">@report_detail.Product_Name</h5>
-                <p class="card-text">@report_detail.product_Description</p>
-                <span class="badge bg-danger">Low Stock</span>
+    <div class="d-flex flex-wrap justify-content-start">
+        @foreach (var report_detail in Model)
+        {
+            <div class="card shadow-lg m-3" style="width: 18rem; border-radius: 15px; overflow: hidden; transition: transform 0.3s;">
+                <img src="/Files/Images/Report!.jpg" class="card-img-top" alt="Report Image" style="height: 250px; object-fit: cover;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">
+                        <i class="fas fa-user"></i> @report_detail.Reporter_Name
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        <i class="fas fa-box"></i> @report_detail.Product_Name
+                    </h6>
+                    <p class="card-text">
+                        <i class="fas fa-info-circle"></i> @report_detail.product_Description
+                    </p>
+                    <span class="badge bg-danger">
+                        <i class="fas fa-exclamation-triangle"></i> Low Stock
+                    </span>
+                </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 }
 @if (User.IsInRole("Admin"))
 {
@@ -27,27 +38,43 @@
         @foreach (var report_detail in Model)
         {
             var i = 0;
-            <div class="card shadow-sm" style="width: 18rem; margin: 10px;">
-                <img src="/Files/Images/Report!.jpg" class="card-img-top" alt="..." style="height: 250px; object-fit: cover;">
-                <div class="card-body">
-                    <h5 class="card-title">@report_detail.Reported_Name</h5>
-                    <h5 class="card-subtitle mb-2 text-muted">@report_detail.Product_Name</h5>
-                    <p class="card-text">@report_detail.product_Description</p>
-                    @if (ViewBag.Flags[i] == true)
+            <div class="card shadow-lg m-3" style="width: 19rem; border-radius: 15px; overflow: hidden; transition: transform 0.3s;">
+                <img src="/Files/Images/Report!.jpg" class="card-img-top" alt="Report Image" style="height: 250px; object-fit: cover;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">
+                        <i class="fas fa-user"></i> @report_detail.Reported_Name
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        <i class="fas fa-box"></i> @report_detail.Product_Name
+                    </h6>
+                    <p class="card-text">
+                        <i class="fas fa-info-circle"></i> @report_detail.product_Description
+                    </p>
+                    @if (ViewBag.Flags[i] == 1)
                     {
-                        <span class="badge bg-success">In Stock</span>
+                        <span class="badge bg-success">
+                            <i class="fas fa-check-circle"></i> In Stock
+                        </span>
                     }
-                    @if (ViewBag.Flags[i] == false)
+                    @if (ViewBag.Flags[i] == 0)
                     {
-                        <span class="badge bg-danger">Low Stock</span>
+                        <span class="badge bg-danger">
+                            <i class="fas fa-exclamation-triangle"></i> Low Stock
+                        </span>
                     }
-                    <a href="/Dashboard/Delete_Report?report_id=@report_detail.Report_Id" class="btn btn-primary btn-primary" style="color: white; margin-left: 5px;">Delete Report</a>
+                    @if (ViewBag.Flags[i] == -1)
+                    {
+                        <span class="badge bg-secondary">
+                            <i class="fas fa-trash-alt"></i> This Product Deleted
+                        </span>
+                    }
+                    <a href="/Dashboard/Delete_Report?report_id=@report_detail.Report_Id" class="btn btn-danger" style="color: white; margin-left: 5px;">
+                        <i class="fas fa-trash-alt"></i> Delete Report
+                    </a>
                 </div>
+
             </div>
             i++;
         }
     </div>
 }
-
-
-

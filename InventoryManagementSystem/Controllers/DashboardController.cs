@@ -63,30 +63,38 @@ namespace InventoryManagementSystem.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Get_All_Reports_Admin()
         {
+            string User_Id = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
             var list = (from report in dbcontext.Reports
                        join application_user in dbcontext.ApplicationUsers on report.UserId equals application_user.Id
+                       join supplier in dbcontext.suppliers on report.SupplierId equals supplier.SupplierId
+                       where report.UserId == User_Id
                        select new Report_Details_ModelView
                        {
                            Report_Id = report.Report_Id,
+                           supplier_Id = supplier.SupplierId,
                            Product_Name = report.Product_Name,
                            product_Description = report.Discription,
                            Reported_Name = report.Supplier_Name,
                        }).ToList();
 
             List<Product> products = new List<Product>();
-            List<bool> flags = new List<bool>();
+            List<int> flags = new List<int>();
             foreach (var item in list)
             {
-                Product? product = dbcontext.products.SingleOrDefault(prod=>prod.ProductName == item.Product_Name);
+                Product? product = dbcontext.products.SingleOrDefault(prod=>prod.ProductName == item.Product_Name && prod.SupplierId == item.supplier_Id);
                 if(product != null && product.Stock > product.LowStock)
                 {
                     products.Add(product);
-                    flags.Add(true);
+                    flags.Add(1);
                 }
                 if (product != null && product.Stock <= product.LowStock)
                 {
                     products.Add(product);
-                    flags.Add(false);
+                    flags.Add(0);
+                }
+                if(product == null)
+                {
+                    flags.Add(-1);
                 }
                 ViewBag.Flags = flags;
             }

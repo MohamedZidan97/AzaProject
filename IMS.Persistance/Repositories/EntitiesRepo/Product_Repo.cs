@@ -64,24 +64,52 @@ namespace IMS.Persistance.Repositories.EntitiesRepo
         {
             var list = from customer_product in dbcontext.customer_Products
                        join product in dbcontext.products on customer_product.ProductId equals product.ProductId
+                       join application_user in dbcontext.ApplicationUsers on customer_product.CustomerId equals application_user.Id
                        join supplier in dbcontext.suppliers on product.SupplierId equals supplier.SupplierId
                        where customer_product.CustomerId == customer_id
                        select new ProductShipped
                        {
+                           Product_Id = product.ProductId,
                            Product_Image = product.Image,
                            Product_Name = product.ProductName,
                            Product_Price = product.Price,
+                           Supplier_Id = supplier.SupplierId,
                            Supplier_Name = supplier.SupplierFirstName + " " + supplier.SupplierLastName,
                            Supplier_Email = supplier.Email,
-                           Supplier_Phone = supplier.PhoneNumber
+                           Supplier_Phone = supplier.PhoneNumber,
+                           Customer_Name = application_user.FirstName + " " + application_user.LastName,
                        };
             return list.ToList();
         }
 
-        public void AddToCart(Customer_Product customer_product)
+        public bool AddToCart(Customer_Product customer_product)
         {
-            dbcontext.customer_Products.Add(customer_product);
+            var check_customer_product = dbcontext.customer_Products.FirstOrDefault
+                (  bp => bp.CustomerId == customer_product.CustomerId
+                && bp.ProductId == customer_product.ProductId
+                );
+            if (check_customer_product == null)
+            {
+                dbcontext.customer_Products.Add(customer_product);
+                dbcontext.SaveChanges();
+                return true ;
+            }
+            else
+                return false;
+        }
+
+        public void AddNewBuyingProccess(Buying_Proccess buying_process_model)
+        {
+            dbcontext.Buying_Proccess.Add(buying_process_model);
             dbcontext.SaveChanges();
         }
+
+        public void DeleteProductFromShippingCart(string customer_id , int product_id)
+        {
+            Customer_Product customer_Product = dbcontext.customer_Products.SingleOrDefault(cp => cp.CustomerId == customer_id && cp.ProductId == product_id);
+            dbcontext.customer_Products.Remove(customer_Product);
+            dbcontext.SaveChanges();
+        }
+
     }
 }

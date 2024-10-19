@@ -41,16 +41,36 @@ namespace IMS.Persistance
             builder.Entity<Customer_Product>().HasKey(cp => new { cp.CustomerId, cp.ProductId });
 
             builder.Entity<Customer_Product>()
-        .HasOne(cp => cp.Customer)
-        .WithMany()
-        .HasForeignKey(cp => cp.CustomerId)
-        .OnDelete(DeleteBehavior.NoAction); // or DeleteBehavior.Restrict
+                .HasOne(cp => cp.Customer)
+                .WithMany()
+                .HasForeignKey(cp => cp.CustomerId)
+                .OnDelete(DeleteBehavior.NoAction); // or DeleteBehavior.Restrict
 
             builder.Entity<Customer_Product>()
                 .HasOne(cp => cp.Product)
                 .WithMany()
                 .HasForeignKey(cp => cp.ProductId)
                 .OnDelete(DeleteBehavior.NoAction); // or DeleteBehavior.Restrict
+
+
+            builder.Entity<Buying_Proccess>()
+                .HasOne(bp => bp.application_user)
+                .WithMany()
+                .HasForeignKey(bp => bp.customer_id)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Buying_Proccess>()
+                .HasOne(bp => bp.product)
+                .WithMany()
+                .HasForeignKey(bp => bp.product_id)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Buying_Proccess>()
+                .HasOne(bp => bp.supplier)
+                .WithMany()
+                .HasForeignKey(bp => bp.supplier_id)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
             base.OnModelCreating(builder);
         }
@@ -67,5 +87,6 @@ namespace IMS.Persistance
         public DbSet<User_Supplier> user_Suppliers { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Customer_Product> customer_Products { get; set; }
+        public DbSet<Buying_Proccess> Buying_Proccess { get; set; }
     }
 }

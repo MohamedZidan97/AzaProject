@@ -13,6 +13,8 @@ namespace IMS.Application.Interfaces.IEntitiesRepo
         public List<Product_Details_ViewModel> GetAllProductOfLowLevel(string user_id);
         public List<Product> GetAllProductForCustomer();
         public List<ProductShipped> GetAllShippedProductForCustomer(string customer_id);
-        public void AddToCart(Customer_Product customer_product);
+        public bool AddToCart(Customer_Product customer_product);
+        public void AddNewBuyingProccess(Buying_Proccess buying_process_model);
+        public void DeleteProductFromShippingCart(string customer_id, int product_id);
     }
 }

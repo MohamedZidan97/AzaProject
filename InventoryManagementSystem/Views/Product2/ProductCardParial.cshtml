@@ -9,33 +9,44 @@
     </div>
 }
 
-<!-- Container to hold the cards with flexbox -->
-<div class="d-flex flex-wrap justify-content-start">
+<!-- Container to hold the cards in a row -->
+<div class="row">
     @foreach (var product in Model)
     {
-        <div class="card shadow-sm m-4" style="width: 18rem; position: relative;">
-            <img src="/Files/Images/@product.Image" class="card-img-top" alt="..." style="height: 250px; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title">@product.ProductName</h5>
-                <h5 class="card-subtitle mb-2 text-muted">@product.Price</h5>
-                @if (product.Stock > product.LowStock)
-                {
-                    <span class="badge bg-success">In Stock</span>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <form action="/Product2/Add_To_Cart?product_id=@product.ProductId" method="post">
-                            <button type="submit" class="btn btn-sm btn-primary">
-                                <i class="fa fa-shopping-cart"></i> <span class="fw-bold">Add To Cart</span>
-                            </button>
-                        </form>
-                        <div class="alert alert-warning mb-0 ms-2" role="alert">
-                            Only @product.Stock Left In Stock!
+        <div class="col-md-3">
+            <!-- This will allow 4 cards per row -->
+            <div class="card shadow-sm m-2" style="position: relative;">
+                <img src="/Files/Images/@product.Image" class="card-img-top" alt="..." style="height: 250px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-tag"></i> @product.ProductName
+                    </h5>
+                    <h5 class="card-subtitle mb-2 text-muted">
+                        <i class="fas fa-dollar-sign"></i> @product.Price
+                    </h5>
+                    @if (product.Stock > product.LowStock)
+                    {
+                        <span class="badge bg-success">
+                            <i class="fas fa-check-circle"></i> In Stock
+                        </span>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <form action="/Product2/Add_To_Cart?product_id=@product.ProductId" method="post">
+                                <button type="submit" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-shopping-cart"></i> <span class="fw-bold">Add To Cart</span>
+                                </button>
+                            </form>
+                            <div class="alert alert-warning mb-0 ms-2" role="alert">
+                                Only @product.Stock Left In Stock!
+                            </div>
                         </div>
-                    </div>
-                }
-                @if (product.Stock <= product.LowStock)
-                {
-                    <span class="badge bg-danger">Out Of Stock</span>
-                }
+                    }
+                    @if (product.Stock <= product.LowStock)
+                    {
+                        <span class="badge bg-danger">
+                            <i class="fas fa-times-circle"></i> Out Of Stock
+                        </span>
+                    }
+                </div>
             </div>
         </div>
     }
