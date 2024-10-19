@@ -44,13 +44,12 @@ namespace IMS.Persistance
                 .HasOne(cp => cp.Customer)
                 .WithMany()
                 .HasForeignKey(cp => cp.CustomerId)
-                .OnDelete(DeleteBehavior.NoAction); // or DeleteBehavior.Restrict
-
+                .OnDelete(DeleteBehavior.NoAction); 
             builder.Entity<Customer_Product>()
                 .HasOne(cp => cp.Product)
                 .WithMany()
                 .HasForeignKey(cp => cp.ProductId)
-                .OnDelete(DeleteBehavior.NoAction); // or DeleteBehavior.Restrict
+                .OnDelete(DeleteBehavior.NoAction);
 
 
             builder.Entity<Buying_Proccess>()
@@ -70,7 +69,7 @@ namespace IMS.Persistance
                 .WithMany()
                 .HasForeignKey(bp => bp.supplier_id)
                 .OnDelete(DeleteBehavior.NoAction);
-
+            //
 
             base.OnModelCreating(builder);
         }
@@ -88,5 +87,6 @@ namespace IMS.Persistance
         public DbSet<Report> Reports { get; set; }
         public DbSet<Customer_Product> customer_Products { get; set; }
         public DbSet<Buying_Proccess> Buying_Proccess { get; set; }
+        //
     }
 }

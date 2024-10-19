@@ -97,11 +97,13 @@ namespace IMS.Persistance.Repositories.EntitiesRepo
 
         public async Task<GeneralResponse> DeleteProductAsync(int ProductId)
         {
+            // SEIF SHERIF
             List<Customer_Product> relatedRecords = await dbContext.customer_Products
             .Where(cp => cp.ProductId == ProductId)
             .ToListAsync();
             dbContext.customer_Products.RemoveRange(relatedRecords);
             dbContext.SaveChanges();
+            //
             return await baseRepo.DeleteAsync(ProductId);
         }
 
